@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "Port of the CoreOs iPXE server written in Go",
   "main": "main.js",
+  "bin": {"coreos-ipxe-express" : "main.js"},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
