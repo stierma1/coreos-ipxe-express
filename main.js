@@ -30,16 +30,16 @@ route.use('/configs', express.static(path.join(env.dataDirectory,'/configs')));
 route.use('/images', express.static(path.join(env.dataDirectory,'/images')));
 route.use('/sshKeys', express.static(path.join(env.dataDirectory,'/sshKeys')));
 
-app.listen(env.listenPort)
+app.listen(env.listenPort.split(':')[1]);
 
-console.log('Listening on port ' + env.listenPort)
+console.log('Listening on ' + env.listenPort)
 
 function getScript(req, res){
   var profileId = req.query['profile'] || '';
   if(env.baseUrl === ''){
     env.baseUrl = req.hostname;
   }
-
+  console.log('Request for profile ' + profileId)
   getProfile(profileId)
     .then(JSON.parse)
     .then(getOptions)
@@ -104,7 +104,7 @@ function processScript(options){
   };
 
   scriptVariables['{{.Version}}'] = options.version;
-  scriptVariables['{{.BaseUrl}}'] = env.baseUrl + ':' + env.listenPort;
+  scriptVariables['{{.BaseUrl}}'] = env.baseUrl;
   scriptVariables['{{.Options}}'] = options.toString();
   var genScript = script + '';
   for(var i in scriptVariables){
