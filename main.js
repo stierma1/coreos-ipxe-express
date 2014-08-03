@@ -57,7 +57,7 @@ function getProfile(profileId){
     return Promise.resolve('{}');
   }
   var profilePath = path.join(env.dataDirectory, 'profiles', profileId + '.json');
-  return fs.readfileAsync(profilePath, 'utf8');
+  return fs.readFileAsync(profilePath, 'utf8');
 }
 
 function getOptions(profile){
