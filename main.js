@@ -22,13 +22,9 @@ var cloudConfigBase = path.join(env.dataDirectory,'/configs');
 
 app.get('/', getScript);
 
-var route = express.Router();
-//App.use will prepend the baseUrl to all paths in the route
-app.use(env.baseUrl, route);
-
-route.use('/configs', express.static(path.join(env.dataDirectory,'/configs')));
-route.use('/images', express.static(path.join(env.dataDirectory,'/images')));
-route.use('/sshKeys', express.static(path.join(env.dataDirectory,'/sshKeys')));
+app.use('/configs', express.static(path.join(env.dataDirectory,'/configs')));
+app.use('/images', express.static(path.join(env.dataDirectory,'/images')));
+app.use('/sshKeys', express.static(path.join(env.dataDirectory,'/sshKeys')));
 
 app.listen(env.listenPort.split(':')[1]);
 
@@ -75,9 +71,9 @@ function getOptions(profile){
       for(var i in this.console){
         optString += ' console=' + this.console[i];
       }
-      optString += this.cloud_config ? (' cloud-config-url=http://' + env.baseUrl + '/configs/' + this.cloud_config) : '';
+      optString += this.cloud_config ? (' cloud-config-url=http://' + env.baseUrl + '/configs/' + this.cloud_config + '.yml') : '';
       optString += this.coreos_autologin ? (' coreos.autologin=' + this.coreos_autologin): '';
-      optString += this.sshkey ? (' sshkey=' + this.sshkey) : '';
+      optString += this.sshkey ? (' sshkey=' + fs.readfileSync(path.join(env.dataDirectory, 'sshKeys', this.sshkey), 'utf8') : '';
       optString += this.root ? (' root=' + this.root) : '';
 
       return optString;
