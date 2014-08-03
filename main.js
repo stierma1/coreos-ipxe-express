@@ -44,9 +44,9 @@ function getScript(req, res){
     .then(JSON.parse)
     .then(getOptions)
     .then(processScript)
-    .then(function(script){
-      req.set('content-type', 'text/plain');
-      res.status(200).send(script);
+    .then(function(genScript){
+      res.header('Content-Type', 'text/plain');
+      res.status(200).send(genScript);
     }).catch(function(err){
       res.status(500).send(err);
     })
@@ -71,19 +71,19 @@ function getOptions(profile){
     'version' : '',
     toString : function(){
       var optString = "";
-
-      optString += this.rootfstype ? ' rootfstype=' + this.rootfstype : '';
+      optString += this.rootfstype ? (' rootfstype=' + this.rootfstype) : '';
       for(var i in this.console){
         optString += ' console=' + this.console[i];
       }
-      optString += this.cloud_config ? ' cloud-config-url=http://' + env.baseUrl + ':' + env.listenEnv + this.cloud_config : '';
-      optString += this.coreos_autologin ? ' coreos.autologin=' + this.coreos_autologin : '';
-      optString += this.sshkey ? ' sshkey=' + this.sshkey : '';
-      optString += this.root ? ' root=' + this.root : '';
+      optString += this.cloud_config ? (' cloud-config-url=http://' + env.baseUrl + '/configs/' + this.cloud_config) : '';
+      optString += this.coreos_autologin ? (' coreos.autologin=' + this.coreos_autologin): '';
+      optString += this.sshkey ? (' sshkey=' + this.sshkey) : '';
+      optString += this.root ? (' root=' + this.root) : '';
 
       return optString;
-    }.bind(this)
+    }
   };
+  options.toString = options.toString.bind(options)
 
   for(var i in options){
     for(var j in profile){
