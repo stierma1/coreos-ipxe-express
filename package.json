@@ -1,6 +1,6 @@
 {
   "name": "coreos-ipxe-express",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Port of the CoreOs iPXE server written in Go",
   "main": "main.js",
   "bin": {"coreos-ipxe-express" : "main.js"},

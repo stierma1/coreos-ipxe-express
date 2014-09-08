@@ -73,7 +73,7 @@ function getOptions(profile){
       for(var i in this.console){
         optString += ' console=' + this.console[i];
       }
-      optString += this.cloud_config ? (' cloud-config-url=http://' + env.baseUrl + '/configs/' + this.cloud_config + '.yml') : '';
+      optString += this.cloud_config ? (' cloud-config-url=http://' + env.baseUrl + '/configs/' + this.cloud_config + '.yml?') : '';
       optString += this.coreos_autologin ? (' coreos.autologin=' + this.coreos_autologin): '';
       optString += this.sshkey ? (' sshkey="' + fs.readFileSync(path.join(env.dataDirectory, 'sshKeys', this.sshkey + '.pub'), 'utf8')).trim() + '"' : '';
       optString += this.root ? (' root=' + this.root) : '';
