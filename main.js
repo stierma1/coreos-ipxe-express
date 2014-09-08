@@ -103,7 +103,7 @@ function processScript(options){
 
   scriptVariables['{{.Version}}'] = options.version;
   scriptVariables['{{.BaseUrl}}'] = env.baseUrl;
-  scriptVariables['{{.Options}}'] = options.toString();
+  scriptVariables['{{.Options}}'] = '?' + options.toString();
   var genScript = script + '';
   for(var i in scriptVariables){
     genScript = genScript.replace(i, scriptVariables[i]);
